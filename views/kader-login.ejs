@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Kader - Posyandu Desa Candiareng</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="auth-page">
+  <div class="auth-container">
+    <div class="auth-header">
+      <div class="logo">
+        <img src="/img/logo-posyandu.png" alt="Logo Posyandu" class="logo-img">
+      </div>
+      <h1>Login Kader Posyandu</h1>
+      <p>Panel Pendataan Balita</p>
+    </div>
+
+    <% if (error) { %>
+      <div class="alert alert-error"><%= error %></div>
+    <% } %>
+
+    <form action="/kader/login" method="POST" class="form">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Username kader" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Password" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Masuk sebagai Kader</button>
+    </form>
+
+    <div class="auth-footer">
+      <p><a href="/login">← Kembali ke Login Ibu</a></p>
+    </div>
+  </div>
+</body>
+</html>

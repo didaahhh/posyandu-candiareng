@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - <%= balita.nama %>
+  </title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="nav-brand">
+      <span class="logo-sm"><img src="/img/logo-posyandu.png" alt="Logo Posyandu"></span>
+      <span style="margin-right: 0.5rem;">Posyandu Candiareng</span>
+      <div
+        style="display: flex; gap: 0.5rem; border-left: 2px solid rgba(0,0,0,0.1); padding-left: 1rem; margin-left: 0.5rem;">
+        <img src="/img/logo-undip.jpg" alt="Undip"
+          style="height: 28px; width: 28px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <img src="/img/logo-kkn.png" alt="KKN"
+          style="height: 28px; width: 28px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+      </div>
+    </div>
+    <div class="nav-user">
+      <span>Halo, <%= user.nama %></span>
+      <a href="/logout" class="btn btn-outline btn-sm">Keluar</a>
+    </div>
+  </nav>
+
+  <main class="container dashboard-page">
+    <section class="dashboard-hero card">
+      <div>
+        <p class="eyebrow">Dashboard Keluarga Posyandu</p>
+        <h1>Profil dan Pertumbuhan <span>Balita</span></h1>
+        <p class="subtitle">Pantau kesehatan anak dengan ringkasan cepat, grafik pintar, dan status pertumbuhan.</p>
+      </div>
+      <div class="hero-actions">
+        <div class="status-chip status-chip--success">
+          <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
+          Terhubung dengan Posyandu
+        </div>
+        <% if (semuaAnak.length> 1) { %>
+          <a href="#anak-selector" class="btn btn-outline btn-sm">
+            <i data-lucide="users" style="width: 16px; height: 16px;"></i>
+            Ganti Anak
+          </a>
+          <% } %>
+      </div>
+    </section>
+
+    <div class="summary-grid">
+      <article class="metric-card">
+        <div class="metric-icon"><i data-lucide="user"></i></div>
+        <div>
+          <div class="metric-label">Nama Balita</div>
+          <div class="metric-value">
+            <%= balita.nama %>
+          </div>
+        </div>
+      </article>
+      <article class="metric-card">
+        <div class="metric-icon"><i data-lucide="calendar"></i></div>
+        <div>
+          <div class="metric-label">Umur</div>
+          <div class="metric-value">
+            <%= umurText %>
+          </div>
+        </div>
+      </article>
+      <article class="metric-card">
+        <div class="metric-icon"><i data-lucide="info"></i></div>
+        <div>
+          <div class="metric-label">Jenis Kelamin</div>
+          <div class="metric-value">
+            <%= balita.jenis_kelamin==='L' ? 'Laki-laki' : 'Perempuan' %>
+          </div>
+        </div>
+      </article>
+      <article class="metric-card">
+        <div class="metric-icon"><i data-lucide="activity"></i></div>
+        <div>
+          <div class="metric-label">Status Terakhir</div>
+          <div class="metric-value">
+            <span class="badge badge-<%= stunting ? stunting.warna : 'success' %>">
+              <%= stunting ? stunting.status : 'Menunggu Data' %>
+            </span>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <% if (semuaAnak.length> 1) { %>
+      <section class="card selector-card" id="anak-selector">
+        <h3 class="card-title">Pilih Anak</h3>
+        <form action="/dashboard/pilih-anak" method="POST" class="anak-selector">
+          <label>Pilih Anak:</label>
+          <select name="balita_id" onchange="this.form.submit()">
+            <% semuaAnak.forEach(a=> { %>
+              <option value="<%= a.id %>" <%=a.id===activeBalitaId ? 'selected' : '' %>><%= a.nama %>
+              </option>
+              <% }) %>
+          </select>
+        </form>
+      </section>
+      <% } %>
+
+        <section class="card profile-card">
+          <div class="profile-avatar <%= balita.jenis_kelamin === 'L' ? 'profile-boy' : 'profile-girl' %>">
+            <% if (balita.jenis_kelamin==='L' ) { %>
+              <img src="/img/boy.png" alt="Foto Anak Laki-laki">
+              <% } else { %>
+                <img src="/img/girl.png" alt="Foto Anak Perempuan">
+                <% } %>
+          </div>
+          <div class="profile-info">
+            <div class="profile-top">
+              <h2>
+                <%= balita.nama %>
+              </h2>
+              <span class="profile-badge"><i data-lucide="check-circle" style="width: 14px; height: 14px;"></i>
+                Terdaftar</span>
+            </div>
+            <div class="profile-meta">
+              <span><strong>Tanggal Lahir</strong>
+                <%= formatTanggal(balita.tanggal_lahir) %>
+              </span>
+              <span><strong>Umur</strong>
+                <%= umurText %>
+              </span>
+              <span><strong>Jenis Kelamin</strong>
+                <%= balita.jenis_kelamin==='L' ? 'Laki-laki' : 'Perempuan' %>
+              </span>
+              <span><strong>Nama Ibu</strong>
+                <%= balita.nama_ibu %>
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <% if (terakhir && stunting) { %>
+          <!-- Status Terkini -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-label">Berat Badan Terakhir</div>
+              <div class="stat-value">
+                <%= terakhir.berat_badan %> <small>kg</small>
+              </div>
+              <div class="stat-badge badge-<%= bbStatus.status === 'Normal' ? 'success' : 'warning' %>">
+                <%= bbStatus.status %>
+              </div>
+              <div class="stat-date">
+                <%= formatTanggal(terakhir.tanggal) %>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Tinggi Badan Terakhir</div>
+              <div class="stat-value">
+                <%= terakhir.tinggi_badan %> <small>cm</small>
+              </div>
+              <div class="stat-badge badge-<%= stunting.warna %>">
+                <%= stunting.status %>
+              </div>
+              <div class="stat-date">
+                <%= formatTanggal(terakhir.tanggal) %>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Lingkar Kepala</div>
+              <div class="stat-value">
+                <%= terakhir.lingkar_kepala || '-' %> <small>cm</small>
+              </div>
+              <div class="stat-date">
+                <%= formatTanggal(terakhir.tanggal) %>
+              </div>
+            </div>
+            <div class="stat-card stat-highlight">
+              <div class="stat-label">Status Stunting (TB/U)</div>
+              <div class="stat-value stat-<%= stunting.warna %>">
+                <%= stunting.status %>
+              </div>
+              <p class="stat-desc">
+                <%= stunting.keterangan %>
+              </p>
+            </div>
+          </div>
+
+          <!-- Grafik Pertumbuhan -->
+          <section class="card">
+            <h3 class="card-title">Grafik Pertumbuhan</h3>
+            <div class="chart-grid">
+              <div class="chart-box">
+                <canvas id="chartBB"></canvas>
+              </div>
+              <div class="chart-box">
+                <canvas id="chartTB"></canvas>
+              </div>
+            </div>
+          </section>
+          <% } else { %>
+            <div class="alert alert-info">Belum ada data kunjungan Posyandu. Silakan hubungi kader Posyandu.</div>
+            <% } %>
+
+              <!-- Riwayat Kunjungan -->
+              <section class="card">
+                <h3 class="card-title">Riwayat Kunjungan Posyandu</h3>
+                <% if (kunjungan.length> 0) { %>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Tanggal</th>
+                          <th>BB (kg)</th>
+                          <th>TB (cm)</th>
+                          <th>LK (cm)</th>
+                          <th>Status BB</th>
+                          <th>Status TB/Stunting</th>
+                          <th>Catatan</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% kunjungan.slice().reverse().forEach(k=> { %>
+                          <tr>
+                            <td>
+                              <%= formatTanggal(k.tanggal) %>
+                            </td>
+                            <td>
+                              <%= k.berat_badan %>
+                            </td>
+                            <td>
+                              <%= k.tinggi_badan %>
+                            </td>
+                            <td>
+                              <%= k.lingkar_kepala || '-' %>
+                            </td>
+                            <td><span class="badge badge-<%= k.bbStatus.status === 'Normal' ? 'success' : 'warning' %>">
+                                <%= k.bbStatus.status %>
+                              </span></td>
+                            <td><span class="badge badge-<%= k.stunting.warna %>">
+                                <%= k.stunting.status %>
+                              </span></td>
+                            <td>
+                              <%= k.catatan || '-' %>
+                            </td>
+                          </tr>
+                          <% }) %>
+                      </tbody>
+                    </table>
+                  </div>
+                  <% } else { %>
+                    <p class="empty">Belum ada riwayat kunjungan.</p>
+                    <% } %>
+              </section>
+
+              <!-- Imunisasi & Vitamin -->
+              <div class="two-col">
+                <section class="card">
+                  <h3 class="card-title">Riwayat Imunisasi</h3>
+                  <% if (imunisasi.length> 0) { %>
+                    <ul class="timeline">
+                      <% imunisasi.forEach(i=> { %>
+                        <li class="timeline-item">
+                          <div class="timeline-date">
+                            <%= formatTanggal(i.tanggal) %>
+                          </div>
+                          <div class="timeline-content">
+                            <strong>
+                              <%= i.nama_vaksin %>
+                            </strong>
+                            <% if (i.catatan) { %>
+                              <p>
+                                <%= i.catatan %>
+                              </p>
+                              <% } %>
+                          </div>
+                        </li>
+                        <% }) %>
+                    </ul>
+                    <% } else { %>
+                      <p class="empty">Belum ada data imunisasi.</p>
+                      <% } %>
+                </section>
+
+                <section class="card">
+                  <h3 class="card-title">Riwayat Pemberian Vitamin</h3>
+                  <% if (vitamin.length> 0) { %>
+                    <ul class="timeline">
+                      <% vitamin.forEach(v=> { %>
+                        <li class="timeline-item">
+                          <div class="timeline-date">
+                            <%= formatTanggal(v.tanggal) %>
+                          </div>
+                          <div class="timeline-content">
+                            <strong>
+                              <%= v.jenis %>
+                            </strong>
+                            <% if (v.catatan) { %>
+                              <p>
+                                <%= v.catatan %>
+                              </p>
+                              <% } %>
+                          </div>
+                        </li>
+                        <% }) %>
+                    </ul>
+                    <% } else { %>
+                      <p class="empty">Belum ada data vitamin.</p>
+                      <% } %>
+                </section>
+              </div>
+  </main>
+
+  <% if (kunjungan.length> 0) { %>
+    <script>
+      const labels = [
+      <% kunjungan.forEach((k, idx) => { %>
+        "<%= k.tanggal %>" <%= idx < kunjungan.length - 1 ? ',' : '' %>
+      <% }) %>
+    ];
+      const bbData = [
+      <% kunjungan.forEach((k, idx) => { %>
+        <%= k.berat_badan %><%= idx < kunjungan.length - 1 ? ',' : '' %>
+      <% }) %>
+    ];
+      const tbData = [
+      <% kunjungan.forEach((k, idx) => { %>
+        <%= k.tinggi_badan %><%= idx < kunjungan.length - 1 ? ',' : '' %>
+      <% }) %>
+    ];
+
+      const chartOpts = {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: false } }
+      };
+
+      new Chart(document.getElementById('chartBB'), {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: 'Berat Badan (kg)',
+            data: bbData,
+            borderColor: '#2563eb',
+            backgroundColor: 'rgba(37,99,235,0.1)',
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: { ...chartOpts, plugins: { legend: { display: true, position: 'top' } } }
+      });
+
+      new Chart(document.getElementById('chartTB'), {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: 'Tinggi Badan (cm)',
+            data: tbData,
+            borderColor: '#16a34a',
+            backgroundColor: 'rgba(22,163,74,0.1)',
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: { ...chartOpts, plugins: { legend: { display: true, position: 'top' } } }
+      });
+    </script>
+    <% } %>
+      <script src="https://unpkg.com/lucide@latest"></script>
+      <script>lucide.createIcons();</script>
+</body>
+
+</html>

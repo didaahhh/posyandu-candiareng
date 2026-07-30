@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tambah Kunjungan - <%= balita.nama %></title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-kader">
+    <div class="nav-brand"><span class="logo-sm"><i data-lucide="stethoscope"></i></span><span>Panel Kader</span></div>
+    <a href="/kader/balita/<%= balita.id %>" class="btn btn-outline btn-sm">← Kembali</a>
+  </nav>
+
+  <main class="container container-narrow">
+    <h1>Catat Kunjungan Posyandu</h1>
+    <p class="subtitle">Balita: <strong><%= balita.nama %></strong></p>
+    <% if (error) { %><div class="alert alert-error"><%= error %></div><% } %>
+
+    <form action="/kader/kunjungan/<%= balita.id %>" method="POST" class="card form-card">
+      <div class="form-group">
+        <label>Tanggal Kunjungan *</label>
+        <input type="date" name="tanggal" required value="<%= new Date().toISOString().split('T')[0] %>">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Berat Badan (kg) *</label>
+          <input type="number" name="berat_badan" step="0.1" min="1" max="30" required placeholder="cth: 10.5">
+        </div>
+        <div class="form-group">
+          <label>Tinggi Badan (cm) *</label>
+          <input type="number" name="tinggi_badan" step="0.1" min="40" max="120" required placeholder="cth: 80.5">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Lingkar Kepala (cm)</label>
+        <input type="number" name="lingkar_kepala" step="0.1" min="30" max="60" placeholder="cth: 45.0">
+      </div>
+      <div class="form-group">
+        <label>Catatan</label>
+        <textarea name="catatan" rows="3" placeholder="Kondisi anak, saran gizi, dll."></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Simpan Kunjungan</button>
+    </form>
+  </main>
+</body>
+</html>

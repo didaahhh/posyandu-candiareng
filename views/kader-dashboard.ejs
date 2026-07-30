@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Kader - Posyandu</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <nav class="navbar navbar-kader">
+    <div class="nav-brand">
+      <span class="logo-sm"><img src="/img/logo-posyandu.png" alt="Logo Posyandu"></span>
+      <span style="margin-right: 0.5rem;">Panel Kader Posyandu</span>
+      <div
+        style="display: flex; gap: 0.5rem; border-left: 2px solid rgba(0,0,0,0.1); padding-left: 1rem; margin-left: 0.5rem;">
+        <img src="/img/logo-undip.jpg" alt="Undip"
+          style="height: 28px; width: 28px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <img src="/img/logo-kkn.png" alt="KKN"
+          style="height: 28px; width: 28px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+      </div>
+    </div>
+    <div class="nav-user">
+      <span>
+        <%= user.nama %>
+      </span>
+      <a href="/kader/logout" class="btn btn-outline btn-sm">Keluar</a>
+    </div>
+  </nav>
+
+  <main class="container dashboard-page">
+    <section class="dashboard-hero card dashboard-hero--kader">
+      <div>
+        <p class="eyebrow">Panel Kader Posyandu</p>
+        <h1>Halo Kader Hebat Posyandu Candiareng!</h1>
+        <p class="subtitle">Mari wujudkan generasi sehat bersama-sama. Di sini Bunda bisa mencatat hasil penimbangan,
+          pemberian vitamin, dan memantau status gizi seluruh balita di desa kita dengan lebih praktis.</p>
+      </div>
+      <div class="hero-actions">
+        <a href="/kader/tambah-balita" class="btn btn-primary"
+          style="background: white; color: var(--kader-dark); box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+          <i data-lucide="plus-circle" style="width: 18px; height: 18px;"></i> Tambah Balita Baru
+        </a>
+      </div>
+    </section>
+
+    <div class="summary-grid">
+      <article class="metric-card">
+        <div class="metric-icon"
+          style="background: linear-gradient(135deg, var(--kader-light), #fff); color: var(--kader);"><i
+            data-lucide="users"></i></div>
+        <div>
+          <div class="metric-label">Total Balita</div>
+          <div class="metric-value">
+            <%= balitaList.length %>
+          </div>
+        </div>
+      </article>
+      <article class="metric-card">
+        <div class="metric-icon"
+          style="background: linear-gradient(135deg, var(--kader-light), #fff); color: var(--kader);"><i
+            data-lucide="user-check"></i></div>
+        <div>
+          <div class="metric-label">Kader</div>
+          <div class="metric-value">
+            <%= user.nama %>
+          </div>
+        </div>
+      </article>
+      <article class="metric-card">
+        <div class="metric-icon"
+          style="background: linear-gradient(135deg, var(--kader-light), #fff); color: var(--kader);"><i
+            data-lucide="map-pin"></i></div>
+        <div>
+          <div class="metric-label">Lokasi</div>
+          <div class="metric-value">Desa Candiareng</div>
+        </div>
+      </article>
+      <article class="metric-card">
+        <div class="metric-icon"
+          style="background: linear-gradient(135deg, var(--kader-light), #fff); color: var(--kader);"><i
+            data-lucide="activity"></i></div>
+        <div>
+          <div class="metric-label">Status</div>
+          <div class="metric-value"><span class="badge badge-success">Aktif</span></div>
+        </div>
+      </article>
+    </div>
+
+    <section class="card">
+      <div class="page-header">
+        <div>
+          <h1>Data Balita Terdaftar</h1>
+          <p class="subtitle">Desa Candiareng — Total <%= balitaList.length %> balita</p>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama Balita</th>
+              <th>Umur</th>
+              <th>Jenis Kelamin</th>
+              <th>Nama Ibu</th>
+              <th>NIK Ibu</th>
+              <th>Kunjungan Terakhir</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% balitaList.forEach((b, i)=> { %>
+              <tr>
+                <td>
+                  <%= i + 1 %>
+                </td>
+                <td><strong>
+                    <%= b.nama %>
+                  </strong></td>
+                <td>
+                  <%= formatUmur(hitungUmurBulan(b.tanggal_lahir)) %>
+                </td>
+                <td>
+                  <%= b.jenis_kelamin==='L' ? 'Laki-laki' : 'Perempuan' %>
+                </td>
+                <td>
+                  <%= b.nama_ibu %>
+                </td>
+                <td>
+                  <%= b.nik_ibu %>
+                </td>
+                <td>
+                  <%= b.kunjungan_terakhir ? formatTanggal(b.kunjungan_terakhir) : '-' %>
+                </td>
+                <td class="actions">
+                  <a href="/kader/balita/<%= b.id %>" class="btn btn-sm btn-outline">Detail</a>
+                  <a href="/kader/kunjungan/<%= b.id %>" class="btn btn-sm btn-primary">+ Kunjungan</a>
+                </td>
+              </tr>
+              <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>lucide.createIcons();</script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tambah Vitamin - <%= balita.nama %></title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-kader">
+    <div class="nav-brand"><span class="logo-sm"><i data-lucide="stethoscope"></i></span><span>Panel Kader</span></div>
+    <a href="/kader/balita/<%= balita.id %>" class="btn btn-outline btn-sm">← Kembali</a>
+  </nav>
+  <main class="container container-narrow">
+    <h1>Catat Pemberian Vitamin</h1>
+    <p class="subtitle">Balita: <strong><%= balita.nama %></strong></p>
+    <form action="/kader/vitamin/<%= balita.id %>" method="POST" class="card form-card">
+      <div class="form-group">
+        <label>Jenis Vitamin *</label>
+        <select name="jenis" required>
+          <option value="Vitamin A">Vitamin A</option>
+          <option value="Vitamin B Kompleks">Vitamin B Kompleks</option>
+          <option value="Vitamin C">Vitamin C</option>
+          <option value="Vitamin D">Vitamin D</option>
+          <option value="Zinc">Zinc</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Tanggal *</label>
+        <input type="date" name="tanggal" required>
+      </div>
+      <div class="form-group">
+        <label>Catatan</label>
+        <input type="text" name="catatan" placeholder="Kapsul biru/merah, dll.">
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Simpan</button>
+    </form>
+  </main>
+</body>
+</html>

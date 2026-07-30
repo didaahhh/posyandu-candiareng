@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tambah Balita - Kader</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-kader">
+    <div class="nav-brand"><span class="logo-sm"><i data-lucide="stethoscope"></i></span><span>Panel Kader</span></div>
+    <a href="/kader/dashboard" class="btn btn-outline btn-sm">← Kembali</a>
+  </nav>
+
+  <main class="container container-narrow">
+    <h1>Tambah Data Balita Baru</h1>
+    <% if (error) { %><div class="alert alert-error"><%= error %></div><% } %>
+
+    <form action="/kader/tambah-balita" method="POST" class="card form-card">
+      <h3 class="card-title">Data Ibu</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>NIK Ibu *</label>
+          <input type="text" name="nik_ibu" maxlength="16" required placeholder="16 digit NIK">
+        </div>
+        <div class="form-group">
+          <label>Nama Ibu *</label>
+          <input type="text" name="nama_ibu" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Password (untuk login ibu)</label>
+          <input type="password" name="password" placeholder="Default: ibu123">
+        </div>
+        <div class="form-group">
+          <label>No. HP</label>
+          <input type="text" name="no_hp">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Alamat</label>
+        <input type="text" name="alamat" placeholder="RT/RW, Desa Candiareng">
+      </div>
+
+      <h3 class="card-title">Data Balita</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nama Anak *</label>
+          <input type="text" name="nama_anak" required>
+        </div>
+        <div class="form-group">
+          <label>Tanggal Lahir *</label>
+          <input type="date" name="tanggal_lahir" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Jenis Kelamin *</label>
+          <select name="jenis_kelamin" required>
+            <option value="L">Laki-laki</option>
+            <option value="P">Perempuan</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>NIK Balita (opsional)</label>
+          <input type="text" name="nik_balita">
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block">Simpan Data Balita</button>
+    </form>
+  </main>
+</body>
+</html>

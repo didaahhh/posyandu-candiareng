@@ -1,0 +1,178 @@
+{
+  "orang_tua": [
+    {
+      "id": 1,
+      "nik": "3273011506890001",
+      "nama": "Siti Aminah",
+      "password": "$2a$10$lNAJ27tjMblpuTUhDuz67eFhSwN7w8CNFmltmIWYiLzU/jMOYK.g2",
+      "no_hp": "081234567890",
+      "alamat": "Desa Candiareng, RT 01/RW 02",
+      "created_at": "2026-07-13T16:35:37.618Z"
+    },
+    {
+      "id": 2,
+      "nik": "3273012007900002",
+      "nama": "Dewi Lestari",
+      "password": "$2a$10$WYequnbtLVTU3LNfsq2wqO4xLihpyRFmyTOAgW8bDgYFNYJBmFHum",
+      "no_hp": "081298765432",
+      "alamat": "Desa Candiareng, RT 03/RW 02",
+      "created_at": "2026-07-13T16:35:37.694Z"
+    },
+    {
+      "id": 3,
+      "nik": "40040323650084",
+      "nama": "HAVILAH ARVIA",
+      "password": "$2a$10$mSQFsfWMs3gPvpSevu9MZO2n5qYvBSPXnQJxZNlFJVN/YhDD3fgzq",
+      "no_hp": "085879685069",
+      "alamat": "Semarang",
+      "created_at": "2026-07-13T16:51:05.474Z"
+    }
+  ],
+  "balita": [
+    {
+      "id": 1,
+      "orang_tua_id": 1,
+      "nama": "Ahmad Fadli",
+      "tanggal_lahir": "2023-03-15",
+      "jenis_kelamin": "L",
+      "nik_balita": "3273011503230001",
+      "created_at": "2026-07-13T16:35:37.618Z"
+    },
+    {
+      "id": 2,
+      "orang_tua_id": 2,
+      "nama": "Putri Ayu",
+      "tanggal_lahir": "2024-06-20",
+      "jenis_kelamin": "P",
+      "nik_balita": "3273012006240002",
+      "created_at": "2026-07-13T16:35:37.694Z"
+    },
+    {
+      "id": 3,
+      "orang_tua_id": 3,
+      "nama": "Dimas Aditya",
+      "tanggal_lahir": "2023-08-07",
+      "jenis_kelamin": "L",
+      "nik_balita": null,
+      "created_at": "2026-07-13T16:51:05.475Z"
+    }
+  ],
+  "kunjungan": [
+    {
+      "id": 1,
+      "balita_id": 1,
+      "tanggal": "2024-01-10",
+      "berat_badan": 9.2,
+      "tinggi_badan": 72.5,
+      "lingkar_kepala": 44,
+      "catatan": "Pertumbuhan normal",
+      "created_at": "2026-07-13T16:35:37.619Z"
+    },
+    {
+      "id": 2,
+      "balita_id": 1,
+      "tanggal": "2024-04-12",
+      "berat_badan": 9.8,
+      "tinggi_badan": 75,
+      "lingkar_kepala": 44.5,
+      "catatan": "BB naik baik",
+      "created_at": "2026-07-13T16:35:37.619Z"
+    },
+    {
+      "id": 3,
+      "balita_id": 1,
+      "tanggal": "2024-07-15",
+      "berat_badan": 10.1,
+      "tinggi_badan": 77.2,
+      "lingkar_kepala": 45,
+      "catatan": "Perlu perhatian tinggi badan",
+      "created_at": "2026-07-13T16:35:37.619Z"
+    },
+    {
+      "id": 4,
+      "balita_id": 1,
+      "tanggal": "2024-10-08",
+      "berat_badan": 10.5,
+      "tinggi_badan": 78.8,
+      "lingkar_kepala": 45.2,
+      "catatan": "Monitoring stunting",
+      "created_at": "2026-07-13T16:35:37.620Z"
+    },
+    {
+      "id": 5,
+      "balita_id": 1,
+      "tanggal": "2025-01-14",
+      "berat_badan": 11,
+      "tinggi_badan": 80.5,
+      "lingkar_kepala": 45.5,
+      "catatan": "Sedikit di bawah standar TB",
+      "created_at": "2026-07-13T16:35:37.620Z"
+    },
+    {
+      "id": 6,
+      "balita_id": 1,
+      "tanggal": "2025-04-10",
+      "berat_badan": 11.4,
+      "tinggi_badan": 82,
+      "lingkar_kepala": 46,
+      "catatan": "Ada perbaikan",
+      "created_at": "2026-07-13T16:35:37.620Z"
+    }
+  ],
+  "imunisasi": [
+    {
+      "id": 1,
+      "balita_id": 1,
+      "nama_vaksin": "BCG & Hepatitis B",
+      "tanggal": "2023-03-16",
+      "catatan": "Dosis 0"
+    },
+    {
+      "id": 2,
+      "balita_id": 1,
+      "nama_vaksin": "DPT-HB-Hib 1",
+      "tanggal": "2023-05-20",
+      "catatan": "Selesai"
+    },
+    {
+      "id": 3,
+      "balita_id": 1,
+      "nama_vaksin": "Campak",
+      "tanggal": "2024-03-18",
+      "catatan": "Selesai"
+    }
+  ],
+  "vitamin": [
+    {
+      "id": 1,
+      "balita_id": 1,
+      "jenis": "Vitamin A",
+      "tanggal": "2024-08-15",
+      "catatan": "Kapsul biru"
+    },
+    {
+      "id": 2,
+      "balita_id": 1,
+      "jenis": "Vitamin A",
+      "tanggal": "2025-02-10",
+      "catatan": "Kapsul merah"
+    }
+  ],
+  "kader": [
+    {
+      "id": 1,
+      "username": "kader",
+      "nama": "Kader Posyandu Candiareng",
+      "password": "$2a$10$Sy.2vHEMVVdfzdZ78QvGGu7/5LGHAlZdjyj2cPVMrF31ReI.xZd..",
+      "created_at": "2026-07-13T16:35:37.524Z"
+    }
+  ],
+  "_counters": {
+    "orang_tua": 3,
+    "balita": 3,
+    "kunjungan": 6,
+    "imunisasi": 3,
+    "vitamin": 2,
+    "kader": 1
+  }
+}

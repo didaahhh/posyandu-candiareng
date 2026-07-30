@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail <%= balita.nama %> - Kader</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-kader">
+    <div class="nav-brand">
+      <span class="logo-sm"><i data-lucide="stethoscope"></i></span>
+      <span>Panel Kader Posyandu</span>
+    </div>
+    <div class="nav-user">
+      <a href="/kader/dashboard" class="btn btn-outline btn-sm">← Daftar Balita</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="page-header">
+      <div>
+        <h1><%= balita.nama %></h1>
+        <p class="subtitle">Ibu: <%= balita.nama_ibu %> | Umur: <%= umurText %></p>
+      </div>
+      <div class="btn-group">
+        <a href="/kader/kunjungan/<%= balita.id %>" class="btn btn-primary">+ Kunjungan</a>
+        <a href="/kader/imunisasi/<%= balita.id %>" class="btn btn-outline">+ Imunisasi</a>
+        <a href="/kader/vitamin/<%= balita.id %>" class="btn btn-outline">+ Vitamin</a>
+      </div>
+    </div>
+
+    <% if (terakhir && stunting) { %>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">BB Terakhir</div>
+        <div class="stat-value"><%= terakhir.berat_badan %> kg</div>
+        <div class="stat-badge badge-<%= bbStatus.status === 'Normal' ? 'success' : 'warning' %>"><%= bbStatus.status %></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">TB Terakhir</div>
+        <div class="stat-value"><%= terakhir.tinggi_badan %> cm</div>
+        <div class="stat-badge badge-<%= stunting.warna %>"><%= stunting.status %></div>
+      </div>
+      <div class="stat-card stat-highlight">
+        <div class="stat-label">Status Stunting</div>
+        <div class="stat-value stat-<%= stunting.warna %>"><%= stunting.status %></div>
+        <p class="stat-desc"><%= stunting.keterangan %></p>
+      </div>
+    </div>
+    <% } %>
+
+    <section class="card">
+      <h3 class="card-title">Riwayat Kunjungan</h3>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr><th>Tanggal</th><th>BB</th><th>TB</th><th>LK</th><th>Stunting</th><th>Catatan</th></tr>
+          </thead>
+          <tbody>
+            <% kunjungan.slice().reverse().forEach(k => { %>
+              <tr>
+                <td><%= formatTanggal(k.tanggal) %></td>
+                <td><%= k.berat_badan %> kg</td>
+                <td><%= k.tinggi_badan %> cm</td>
+                <td><%= k.lingkar_kepala || '-' %></td>
+                <td><span class="badge badge-<%= k.stunting.warna %>"><%= k.stunting.status %></span></td>
+                <td><%= k.catatan || '-' %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="two-col">
+      <section class="card">
+        <h3 class="card-title">Imunisasi</h3>
+        <ul class="timeline">
+          <% imunisasi.forEach(i => { %>
+            <li class="timeline-item">
+              <div class="timeline-date"><%= formatTanggal(i.tanggal) %></div>
+              <div class="timeline-content"><strong><%= i.nama_vaksin %></strong><% if (i.catatan) { %><p><%= i.catatan %></p><% } %></div>
+            </li>
+          <% }) %>
+        </ul>
+      </section>
+      <section class="card">
+        <h3 class="card-title">Vitamin</h3>
+        <ul class="timeline">
+          <% vitamin.forEach(v => { %>
+            <li class="timeline-item">
+              <div class="timeline-date"><%= formatTanggal(v.tanggal) %></div>
+              <div class="timeline-content"><strong><%= v.jenis %></strong><% if (v.catatan) { %><p><%= v.catatan %></p><% } %></div>
+            </li>
+          <% }) %>
+        </ul>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

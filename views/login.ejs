@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Posyandu Desa Candiareng</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="auth-page">
+  <div class="auth-layout">
+    <!-- Hero Section with Background -->
+    <div class="auth-hero"
+      style="background-image: linear-gradient(150deg, rgba(14, 165, 233, 0.85), rgba(16, 185, 129, 0.8)), url('/img/posyandu_hero_bg.png'); background-size: cover; background-position: center; border: 1px solid rgba(255,255,255,0.3); display: flex; flex-direction: column;">
+      <div class="brand-block">
+        <div class="logo-container" style="background: rgba(255,255,255,0.9); border: none;">
+          <img src="/img/logo-posyandu.png" alt="Logo Posyandu" class="logo-img" style="width: 32px; height: 32px;">
+        </div>
+        <span class="brand-label">Posyandu Candiareng</span>
+      </div>
+
+      <h1>Halo Bunda, Selamat Datang!</h1>
+      <p>Mari bersama pantau kesehatan dan tumbuh kembang si Kecil. Semua catatan dari Posyandu Candiareng kini bisa
+        Bunda akses langsung dari HP.</p>
+
+      <ul class="feature-list">
+        <li>Pantau berat & tinggi badan anak tiap bulan</li>
+        <li>Cek jadwal imunisasi agar tidak terlewat</li>
+        <li>Lihat status gizi si Kecil dengan mudah</li>
+      </ul>
+
+      <div style="margin-top: auto; padding-top: 3rem; display: flex; align-items: center; gap: 1rem;">
+        <span
+          style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.85); font-weight: 700;">Didukung
+          Oleh:</span>
+        <img src="/img/logo-undip.jpg" alt="Logo Undip"
+          style="height: 42px; width: 42px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.8); box-shadow: 0 4px 12px rgba(0,0,0,0.15); object-fit: cover;">
+        <img src="/img/logo-kkn.png" alt="Logo KKN"
+          style="height: 42px; width: 42px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.8); box-shadow: 0 4px 12px rgba(0,0,0,0.15); object-fit: cover;">
+      </div>
+    </div>
+
+    <!-- Login Form Panel -->
+    <div class="auth-panel auth-panel--form">
+      <div class="auth-header" style="text-align: left; margin-bottom: 2rem;">
+        <h1 style="font-size: 2rem; color: var(--text); font-weight: 800;">Selamat Datang</h1>
+        <p style="font-size: 1rem;">Masuk dengan Nama Anak dan Tanggal Lahir</p>
+      </div>
+
+      <% if (typeof error !=='undefined' && error) { %>
+        <div class="alert alert-error" style="border-radius: 12px; margin-bottom: 1.5rem;">
+          <%= error %>
+        </div>
+        <% } %>
+
+          <form action="/login/anak" method="POST" class="form">
+            <div class="form-group">
+              <label for="nama_anak" style="font-weight: 600;">Nama Lengkap Anak</label>
+              <div class="input-wrapper">
+                <input type="text" id="nama_anak" name="nama_anak" class="form-control"
+                  placeholder="Contoh: Budi Santoso" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="tanggal_lahir" style="font-weight: 600;">Tanggal Lahir Anak</label>
+              <div class="input-wrapper">
+                <input type="date" id="tanggal_lahir" name="tanggal_lahir" class="form-control" required>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block"
+              style="margin-top: 1rem; padding: 1rem; font-size: 1.05rem; border-radius: 14px;">Masuk ke Dasbor</button>
+          </form>
+
+          <div class="auth-footer auth-footer--inline"
+            style="margin-top: 2rem; padding-top: 2rem; border-top: 1px dashed var(--border);">
+            <p>Belum terdaftar? <a href="/daftar">Daftar di sini</a></p>
+            <p><a href="/kader/login"
+                style="color: var(--kader); display: inline-flex; align-items: center; gap: 0.25rem;">
+                <i data-lucide="shield-check" style="width: 16px; height: 16px;"></i> Login Kader
+              </a></p>
+          </div>
+    </div>
+  </div>
+</body>
+
+</html>
